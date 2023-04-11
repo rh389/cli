@@ -13,11 +13,11 @@
  * }
  */
 
-import type {CustomResolver} from 'metro-resolver';
+import type {ResolverConfigT} from 'metro-config';
 
 export function reactNativePlatformResolver(platformImplementations: {
   [platform: string]: string;
-}): CustomResolver {
+}): ResolverConfigT['resolveRequest'] {
   return (context, moduleName, platform) => {
     let modifiedModuleName = moduleName;
     if (platform != null && platformImplementations[platform]) {

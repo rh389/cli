@@ -10,7 +10,7 @@
 const mockPath = {};
 
 function reset(platform) {
-  Object.assign(mockPath, jest.requireActual('path')[platform]);
+  Object.assign(mockPath, jest.requireActual('path')[platform], {posix: null});
 }
 
 mockPath.mock = {reset};

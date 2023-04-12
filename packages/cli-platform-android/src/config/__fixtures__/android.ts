@@ -9,18 +9,12 @@
 const fs = jest.requireActual('fs');
 const path = jest.requireActual('path');
 
-const manifest = fs.readFileSync(
-  path.join(__dirname, './files/AndroidManifest.xml'),
-);
-const mainJavaClass = fs.readFileSync(
-  path.join(__dirname, './files/Main.java'),
-);
-const buildGradle = fs.readFileSync(
-  path.join(__dirname, './files/build.gradle'),
-);
-const appBuildGradle = fs.readFileSync(
-  path.join(__dirname, './files/appbuild.gradle'),
-);
+const readFixture = (name: string) =>
+  fs.readFileSync(path.join(__dirname, name), 'utf8');
+const manifest = readFixture('./files/AndroidManifest.xml');
+const mainJavaClass = readFixture('./files/Main.java');
+const buildGradle = readFixture('./files/build.gradle');
+const appBuildGradle = readFixture('./files/appbuild.gradle');
 
 function generateValidFileStructureForLib(classFileName: string) {
   return {
@@ -32,9 +26,7 @@ function generateValidFileStructureForLib(classFileName: string) {
           some: {
             example: {
               'Main.java': mainJavaClass,
-              [classFileName]: fs.readFileSync(
-                path.join(__dirname, `./files/${classFileName}`),
-              ),
+              [classFileName]: readFixture(`./files/${classFileName}`),
             },
           },
         },
@@ -69,17 +61,13 @@ export const userConfigManifest = {
         some: {
           example: {
             'Main.java': mainJavaClass,
-            'ReactPackage.java': fs.readFileSync(
-              path.join(__dirname, './files/ReactPackage.java'),
-            ),
+            'ReactPackage.java': readFixture('./files/ReactPackage.java'),
           },
         },
       },
     },
     debug: {
-      'AndroidManifest.xml': fs.readFileSync(
-        path.join(__dirname, './files/AndroidManifest-debug.xml'),
-      ),
+      'AndroidManifest.xml': readFixture('./files/AndroidManifest-debug.xml'),
     },
   },
 };

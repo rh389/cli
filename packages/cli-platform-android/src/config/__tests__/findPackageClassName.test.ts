@@ -13,11 +13,14 @@ jest.mock('path');
 jest.mock('fs');
 
 const fs = require('fs');
+const path = require('path');
 
-['posix', 'win32'].forEach((platform) => {
-  let root;
-  describe(`android::findPackageClassName (${platform})`, () => {
+describe.each([['posix'], ['win32']])(
+  'android::findPackageClassName (%s)',
+  (platform) => {
+    let root: string;
     beforeAll(() => {
+      path.mock.reset(platform);
       root = fs.__setMockFilesystem(
         {
           empty: {},
@@ -51,8 +54,8 @@ const fs = require('fs');
     it('returns `null` if there are no matches', () => {
       expect(findPackageClassName(`${root}empty`)).toBeNull();
     });
-  });
-});
+  },
+);
 
 describe('android:FindPackageClassNameRegex', () => {
   [
